@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Complet - API Gemini & Persistance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .test-section { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .log { background: #f8f9fa; padding: 10px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1><i class="bx bx-test-tube"></i> Test Complet - Intégration API Gemini</h1>
+        
+        <!-- Configuration -->
+        <div class="test-section">
+            <h3><i class="bx bx-cog"></i> Configuration</h3>
+            <div class="mb-3">
+                <label class="form-label">Clé API Gemini:</label>
+                <div class="input-group">
+                    <input type="password" id="apiKey" class="form-control" placeholder="Votre clé API Gemini">
+                    <button class="btn btn-outline-secondary" onclick="toggleApiKey()">
+                        <i class="bx bx-show" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="runAllTests()">🚀 Lancer tous les tests</button>
+            <button class="btn btn-secondary" onclick="clearResults()">🗑️ Vider les résultats</button>
+        </div>
+
+        <!-- Tests de Persistance -->
+        <div class="test-section">
+            <h3><i class="bx bx-save"></i> Tests de Persistance</h3>
+            <button class="btn btn-info" onclick="testPersistence()">Test Sauvegarde/Chargement</button>
+            <div id="persistenceResults"></div>
+        </div>
+
+        <!-- Tests de Validation -->
+        <div class="test-section">
+            <h3><i class="bx bx-check-shield"></i> Tests de Validation</h3>
+            <button class="btn btn-info" onclick="testValidation()">Test Validation Clé API</button>
+            <div id="validationResults"></div>
+        </div>
+
+        <!-- Tests de Connexion API -->
+        <div class="test-section">
+            <h3><i class="bx bx-wifi"></i> Tests de Connexion API</h3>
+            <button class="btn btn-info" onclick="testConnection()">Test Connexion Gemini</button>
+            <div id="connectionResults"></div>
+        </div>
+
+        <!-- Tests d'Auto-remplissage -->
+        <div class="test-section">
+            <h3><i class="bx bx-brain"></i> Tests d'Auto-remplissage</h3>
+            <div class="mb-3">
+                <label class="form-label">Intitulé de poste de test:</label>
+                <input type="text" id="testJobTitle" class="form-control" value="Développeur Full Stack H/F" placeholder="Ex: Développeur Full Stack H/F">
+            </div>
+            <button class="btn btn-info" onclick="testAutofill()">Test Auto-remplissage</button>
+            <div id="autofillResults"></div>
+        </div>
+
+        <!-- Tests des Notifications -->
+        <div class="test-section">
+            <h3><i class="bx bx-bell"></i> Tests des Notifications</h3>
+            <button class="btn btn-success" onclick="testNotification('success')">Success</button>
+            <button class="btn btn-danger" onclick="testNotification('error')">Error</button>
+            <button class="btn btn-warning" onclick="testNotification('warning')">Warning</button>
+            <button class="btn btn-info" onclick="testNotification('info')">Info</button>
+        </div>
+
+        <!-- Journal de Tests -->
+        <div class="test-section">
+            <h3><i class="bx bx-list-ul"></i> Journal de Tests</h3>
+            <div id="testLog" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        // État global des tests
+        let testResults = {
+            persistence: false,
+            validation: false,
+            connection: false,
+            autofill: false,
+            notifications: true
+        };
+
+        // Fonctions utilitaires
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logDiv = document.getElementById('testLog');
+            const entry = `[${timestamp}] ${type.toUpperCase()}: ${message}\n`;
+            logDiv.textContent += entry;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(entry);
+        }
+
+        function showResult(containerId, message, type) {
+            const container = document.getElementById(containerId);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${type}`;
+            resultDiv.innerHTML = `<i class="bx bx-${type === 'success' ? 'check' : type === 'error' ? 'x' : 'info'}-circle"></i> ${message}`;
+            container.appendChild(resultDiv);
+        }
+
+        function clearResults() {
+            ['persistenceResults', 'validationResults', 'connectionResults', 'autofillResults'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            document.getElementById('testLog').textContent = '';
+            log('Résultats des tests vidés');
+        }
+
+        function toggleApiKey() {
+            const input = document.getElementById('apiKey');
+            const icon = document.getElementById('toggleIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'bx bx-hide';
+            } else {
+                input.type = 'password';
+                icon.className = 'bx bx-show';
+            }
+        }
+
+        // Système de notifications (copié de l'application principale)
+        function showNotification(message, type = 'info', duration = 5000) {
+            const existingNotification = document.querySelector('.custom-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `custom-notification alert alert-${type} alert-dismissible fade show`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                max-width: 500px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border-radius: 8px;
+            `;
+            
+            let icon = '';
+            switch(type) {
+                case 'success': icon = '<i class="bx bx-check-circle me-2"></i>'; break;
+                case 'danger': case 'error': icon = '<i class="bx bx-error-circle me-2"></i>'; break;
+                case 'warning': icon = '<i class="bx bx-error me-2"></i>'; break;
+                case 'info': icon = '<i class="bx bx-info-circle me-2"></i>'; break;
+                default: icon = '<i class="bx bx-bell me-2"></i>';
+            }
+            
+            notification.innerHTML = `
+                ${icon}${message}
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, duration);
+            }
+        }
+
+        // Test de persistance
+        async function testPersistence() {
+            log('Début test de persistance');
+            
+            try {
+                // Test 1: Sauvegarde
+                const testKey = 'AIzaSyTest123456789TestKey';
+                localStorage.setItem('geminiApiKey', testKey);
+                log('Clé de test sauvegardée');
+                
+                // Test 2: Chargement
+                const loadedKey = localStorage.getItem('geminiApiKey');
+                if (loadedKey === testKey) {
+                    showResult('persistenceResults', 'Sauvegarde/chargement réussi', 'success');
+                    testResults.persistence = true;
+                    log('Test de persistance RÉUSSI');
+                } else {
+                    showResult('persistenceResults', 'Erreur de persistance', 'error');
+                    log('Test de persistance ÉCHOUÉ');
+                }
+                
+                // Test 3: Suppression
+                localStorage.removeItem('geminiApiKey');
+                const removedKey = localStorage.getItem('geminiApiKey');
+                if (removedKey === null) {
+                    showResult('persistenceResults', 'Suppression réussie', 'success');
+                    log('Suppression de test réussie');
+                } else {
+                    showResult('persistenceResults', 'Erreur de suppression', 'error');
+                    log('Erreur lors de la suppression');
+                }
+                
+            } catch (error) {
+                showResult('persistenceResults', 'Erreur localStorage: ' + error.message, 'error');
+                log('Erreur localStorage: ' + error.message);
+            }
+        }
+
+        // Test de validation
+        function testValidation() {
+            log('Début test de validation');
+            
+            const testCases = [
+                { key: '', expected: false, description: 'Clé vide' },
+                { key: 'invalid', expected: false, description: 'Clé trop courte' },
+                { key: 'NotAIKey123456789', expected: false, description: 'Ne commence pas par AI' },
+                { key: 'AIzaSyTest123456789', expected: true, description: 'Clé valide' }
+            ];
+            
+            function isValidApiKey(apiKey) {
+                return apiKey && apiKey.length > 10 && apiKey.startsWith('AI');
+            }
+            
+            let passed = 0;
+            testCases.forEach(testCase => {
+                const result = isValidApiKey(testCase.key);
+                if (result === testCase.expected) {
+                    showResult('validationResults', `✓ ${testCase.description}`, 'success');
+                    passed++;
+                } else {
+                    showResult('validationResults', `✗ ${testCase.description}`, 'error');
+                }
+                log(`Test validation: ${testCase.description} - ${result === testCase.expected ? 'RÉUSSI' : 'ÉCHOUÉ'}`);
+            });
+            
+            if (passed === testCases.length) {
+                testResults.validation = true;
+                log('Tous les tests de validation RÉUSSIS');
+            } else {
+                log(`Tests de validation partiellement réussis: ${passed}/${testCases.length}`);
+            }
+        }
+
+        // Test de connexion
+        async function testConnection() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            
+            if (!apiKey) {
+                showResult('connectionResults', 'Veuillez entrer une clé API', 'warning');
+                return;
+            }
+            
+            log('Début test de connexion API');
+            showResult('connectionResults', 'Test de connexion en cours...', 'info');
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "Test" }] }]
+                    })
+                });
+
+                if (response.ok) {
+                    showResult('connectionResults', 'Connexion API réussie ✓', 'success');
+                    testResults.connection = true;
+                    log('Test de connexion RÉUSSI');
+                } else {
+                    showResult('connectionResults', `Erreur API: ${response.status}`, 'error');
+                    log(`Test de connexion ÉCHOUÉ: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('connectionResults', 'Erreur réseau: ' + error.message, 'error');
+                log('Erreur réseau: ' + error.message);
+            }
+        }
+
+        // Test d'auto-remplissage
+        async function testAutofill() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const jobTitle = document.getElementById('testJobTitle').value.trim();
+            
+            if (!apiKey || !jobTitle) {
+                showResult('autofillResults', 'Veuillez remplir la clé API et l\'intitulé', 'warning');
+                return;
+            }
+            
+            log('Début test d\'auto-remplissage');
+            showResult('autofillResults', 'Test d\'auto-remplissage en cours...', 'info');
+            
+            try {
+                const prompt = `Basé sur "${jobTitle}", réponds avec un JSON: {"secteur":"Commercial","metier":"Commercial - Vente","description":"Test description"}`;
+                
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    
+                    // Essayer de parser le JSON
+                    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const jobData = JSON.parse(jsonMatch[0]);
+                        showResult('autofillResults', 'Auto-remplissage réussi ✓', 'success');
+                        showResult('autofillResults', `Données reçues: ${JSON.stringify(jobData, null, 2)}`, 'info');
+                        testResults.autofill = true;
+                        log('Test d\'auto-remplissage RÉUSSI');
+                    } else {
+                        showResult('autofillResults', 'Format JSON non trouvé', 'error');
+                        log('Test d\'auto-remplissage ÉCHOUÉ: JSON non trouvé');
+                    }
+                } else {
+                    showResult('autofillResults', `Erreur API: ${response.status}`, 'error');
+                    log(`Test d\'auto-remplissage ÉCHOUÉ: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('autofillResults', 'Erreur: ' + error.message, 'error');
+                log('Erreur auto-remplissage: ' + error.message);
+            }
+        }
+
+        // Test des notifications
+        function testNotification(type) {
+            const messages = {
+                success: '✅ Notification de succès test',
+                error: '❌ Notification d\'erreur test',
+                warning: '⚠️ Notification d\'avertissement test',
+                info: 'ℹ️ Notification d\'information test'
+            };
+            
+            showNotification(messages[type], type, 3000);
+            log(`Notification ${type} affichée`);
+        }
+
+        // Lancer tous les tests
+        async function runAllTests() {
+            log('=== DÉBUT DES TESTS COMPLETS ===');
+            clearResults();
+            
+            // Tests séquentiels
+            await testPersistence();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            testValidation();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            if (document.getElementById('apiKey').value.trim()) {
+                await testConnection();
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                await testAutofill();
+            } else {
+                log('Tests API ignorés - pas de clé API fournie');
+                showResult('connectionResults', 'Clé API requise pour les tests API', 'warning');
+                showResult('autofillResults', 'Clé API requise pour les tests API', 'warning');
+            }
+            
+            // Résumé final
+            const totalTests = Object.keys(testResults).length;
+            const passedTests = Object.values(testResults).filter(result => result).length;
+            
+            log(`=== RÉSUMÉ: ${passedTests}/${totalTests} tests réussis ===`);
+            
+            if (passedTests === totalTests) {
+                showNotification(`🎉 Tous les tests réussis! (${passedTests}/${totalTests})`, 'success', 8000);
+            } else {
+                showNotification(`⚠️ Tests partiellement réussis: ${passedTests}/${totalTests}`, 'warning', 8000);
+            }
+        }
+
+        // Charger une clé API depuis localStorage au démarrage
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedKey = localStorage.getItem('geminiApiKey');
+            if (savedKey) {
+                document.getElementById('apiKey').value = savedKey;
+                log('Clé API chargée depuis localStorage');
+            }
+        });
+    </script>
+</body>
+</html>
