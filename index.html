@@ -67,6 +67,285 @@ document.getElementById("salmax").value = salaire;
 document.getElementById("salmin").value = salaire-5;
 
 }
+
+// Fonctions pour l'intégration API Gemini
+function toggleApiKeyVisibility() {
+    const apiKeyInput = document.getElementById('geminiApiKey');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (apiKeyInput.type === 'password') {
+        apiKeyInput.type = 'text';
+        toggleIcon.className = 'bx bx-hide';
+    } else {
+        apiKeyInput.type = 'password';
+        toggleIcon.className = 'bx bx-show';
+    }
+}
+
+function saveApiKey() {
+    const apiKey = document.getElementById('geminiApiKey').value;
+    if (apiKey.trim() === '') {
+        alert('Veuillez entrer une clé API valide');
+        return;
+    }
+    
+    localStorage.setItem('geminiApiKey', apiKey);
+    alert('Clé API sauvegardée avec succès!');
+}
+
+function loadApiKey() {
+    const savedApiKey = localStorage.getItem('geminiApiKey');
+    if (savedApiKey) {
+        document.getElementById('geminiApiKey').value = savedApiKey;
+    }
+}
+
+async function aiAutofill() {
+    const jobTitle = document.getElementById('titre').value.trim();
+    const apiKey = document.getElementById('geminiApiKey').value.trim() || localStorage.getItem('geminiApiKey');
+    
+    if (!jobTitle) {
+        alert('Veuillez entrer un intitulé de poste avant d\'utiliser l\'auto-remplissage IA');
+        return;
+    }
+    
+    if (!apiKey) {
+        alert('Veuillez configurer votre clé API Gemini avant d\'utiliser cette fonctionnalité');
+        return;
+    }
+    
+    // Afficher le spinner
+    document.getElementById('spinner-overlay').style.visibility = "visible";
+    document.getElementById('aiAutofillBtn').disabled = true;
+    
+    try {
+        const prompt = `Basé sur l'intitulé de poste "${jobTitle}", fournis-moi les informations suivantes au format JSON strict:
+
+{
+  "secteur": "un des secteurs suivants: Agro-alimentaire, Architecture, Banque - Finance - Assurance, BIM Bâtiment - Génie Civil, Commercial, Conseil - Audit - Juridique, Eau et Environnement, Encadrement de Chantier Bâtiment - Génie Civil, Encadrement de Chantier TP / VRD, Exécution de Chantier Bâtiment - Génie Civil, Génie Climatique, Génie Electrique, Géomètre Topographe, Immobilier, Infrastructure Télécom, Ingénierie Bâtiment, Ingénierie Génie Civil, Ingénierie VRD, Maintenance Technique, Management de projet - MOEX, Marketing & Communication, Mécanique Générale, Mode & Luxe, NTIC - Digital, Paysagiste, Ressources Humaines, Santé, Tertiaire Technique, Transport-Logistique",
+  "metier": "un des métiers suivants: Achat - Import - Export, Agriculture - Environnement, Assistanat - Secrétariat, Automobile, BTP, Commerce - Distribution, Commercial - Vente, Comptabilité - Gestion - Finance, Direction - Responsable centre de profit, Fonction publique, Immobilier, Industrie - Production, Informatique - Internet - Télécom, Ingénierie/Bureau Etudes, Juridique - Droit, Marketing - Communication, Ressources humaines, Santé - Social, Sécurité, Services à la personne, Hôtellerie - Restauration - Tourisme, Transport - Logistique",
+  "description": "une description détaillée du poste en 3-4 phrases",
+  "competences": "liste des compétences requises séparées par des virgules",
+  "salaire_min": "salaire minimum estimé en euros (nombre uniquement)",
+  "salaire_max": "salaire maximum estimé en euros (nombre uniquement)",
+  "type_contrat": "CDI, CDD, Stage, Interim, Freelance, ou Apprentissage",
+  "experience": "nombre d'années d'expérience minimum requis (nombre uniquement)"
+}
+
+Réponds uniquement avec le JSON, sans texte supplémentaire.`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }]
+                }]
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur API: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            
+            try {
+                // Nettoyer la réponse pour extraire le JSON
+                const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) {
+                    throw new Error('Format JSON non trouvé dans la réponse');
+                }
+                
+                const jobData = JSON.parse(jsonMatch[0]);
+                
+                // Remplir automatiquement les champs du formulaire
+                fillFormWithAIData(jobData);
+                
+                alert('Auto-remplissage terminé avec succès!');
+            } catch (parseError) {
+                console.error('Erreur de parsing JSON:', parseError);
+                alert('Erreur lors du traitement de la réponse IA. Veuillez réessayer.');
+            }
+        } else {
+            throw new Error('Réponse invalide de l\'API Gemini');
+        }
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'appel à l\'API Gemini:', error);
+        alert('Erreur lors de l\'auto-remplissage: ' + error.message);
+    } finally {
+        // Cacher le spinner
+        document.getElementById('spinner-overlay').style.visibility = "hidden";
+        document.getElementById('aiAutofillBtn').disabled = false;
+    }
+}
+
+function fillFormWithAIData(jobData) {
+    // Mapping des secteurs
+    const secteurMapping = {
+        "Agro-alimentaire": "28",
+        "Architecture": "15",
+        "Banque - Finance - Assurance": "20",
+        "BIM Bâtiment - Génie Civil": "16",
+        "Commercial": "29",
+        "Conseil - Audit - Juridique": "21",
+        "Eau et Environnement": "9",
+        "Encadrement de Chantier Bâtiment - Génie Civil": "12",
+        "Encadrement de Chantier TP / VRD": "5",
+        "Exécution de Chantier Bâtiment - Génie Civil": "13",
+        "Génie Climatique": "2",
+        "Génie Electrique": "3",
+        "Géomètre Topographe": "7",
+        "Immobilier": "19",
+        "Infrastructure Télécom": "1",
+        "Ingénierie Bâtiment": "17",
+        "Ingénierie Génie Civil": "18",
+        "Ingénierie VRD": "10",
+        "Maintenance Technique": "4",
+        "Management de projet - MOEX": "14",
+        "Marketing & Communication": "22",
+        "Mécanique Générale": "11",
+        "Mode & Luxe": "23",
+        "NTIC - Digital": "6",
+        "Paysagiste": "8",
+        "Ressources Humaines": "24",
+        "Santé": "27",
+        "Tertiaire Technique": "25",
+        "Transport-Logistique": "26"
+    };
+
+    // Mapping des métiers
+    const metierMapping = {
+        "Achat - Import - Export": "50",
+        "Agriculture - Environnement": "100",
+        "Assistanat - Secrétariat": "140",
+        "Automobile": "180",
+        "BTP": "220",
+        "Commerce - Distribution": "260",
+        "Commercial - Vente": "300",
+        "Comptabilité - Gestion - Finance": "340",
+        "Direction - Responsable centre de profit": "380",
+        "Fonction publique": "420",
+        "Immobilier": "460",
+        "Industrie - Production": "500",
+        "Informatique - Internet - Télécom": "540",
+        "Ingénierie/Bureau Etudes": "560",
+        "Juridique - Droit": "570",
+        "Marketing - Communication": "580",
+        "Ressources humaines": "620",
+        "Santé - Social": "660",
+        "Sécurité": "680",
+        "Services à la personne": "700",
+        "Hôtellerie - Restauration - Tourisme": "740",
+        "Transport - Logistique": "780"
+    };
+
+    // Remplir le secteur
+    if (jobData.secteur && secteurMapping[jobData.secteur]) {
+        document.querySelector('select[name="perso2"]').value = secteurMapping[jobData.secteur];
+    }
+
+    // Remplir le métier
+    if (jobData.metier && metierMapping[jobData.metier]) {
+        document.getElementById('metier').value = metierMapping[jobData.metier];
+        metierChange(); // Déclencher les changements liés au métier
+    }
+
+    // Remplir d'autres champs si ils existent dans le formulaire
+    if (jobData.description) {
+        // Remplir le champ description
+        const descField = document.getElementById('description');
+        if (descField) {
+            descField.value = jobData.description;
+        }
+    }
+
+    if (jobData.competences) {
+        // Remplir le champ compétences
+        const compField = document.getElementById('competences');
+        if (compField) {
+            compField.value = jobData.competences;
+        }
+    }
+
+    if (jobData.type_contrat) {
+        // Remplir le type de contrat
+        const contratField = document.getElementById('type_contrat');
+        if (contratField) {
+            contratField.value = jobData.type_contrat;
+        }
+    }
+
+    if (jobData.experience) {
+        // Remplir l'expérience minimale
+        const expField = document.getElementById('experience_min');
+        if (expField) {
+            expField.value = jobData.experience;
+        }
+    }
+
+    if (jobData.salaire_min) {
+        // Remplir le salaire minimum
+        const salMinField = document.getElementById('salaire_min');
+        if (salMinField) {
+            salMinField.value = jobData.salaire_min;
+        }
+    }
+
+    if (jobData.salaire_max) {
+        // Remplir le salaire maximum
+        const salMaxField = document.getElementById('salaire_max');
+        if (salMaxField) {
+            salMaxField.value = jobData.salaire_max;
+        }
+    }
+
+    // Afficher un résumé des données récupérées
+    const summary = `Données IA récupérées:
+- Secteur: ${jobData.secteur || 'Non défini'}
+- Métier: ${jobData.metier || 'Non défini'}
+- Type de contrat: ${jobData.type_contrat || 'Non défini'}
+- Expérience: ${jobData.experience || 'Non défini'} ans minimum
+- Salaire: ${jobData.salaire_min || 'N/A'} - ${jobData.salaire_max || 'N/A'} €
+- Compétences: ${jobData.competences || 'Non définies'}`;
+    
+    console.log(summary);
+    
+    // Créer une alerte d'information
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'alert alert-success alert-dismissible fade show';
+    infoDiv.innerHTML = `
+        <strong><i class="bx bx-check-circle"></i> Auto-remplissage réussi!</strong><br>
+        Les champs ont été remplis automatiquement basés sur l'intitulé du poste.<br>
+        <small>Vérifiez et ajustez les informations si nécessaire.</small>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    
+    // Insérer l'alerte avant le formulaire
+    const form = document.querySelector('form');
+    form.parentNode.insertBefore(infoDiv, form);
+    
+    // Supprimer l'alerte après 10 secondes
+    setTimeout(() => {
+        if (infoDiv.parentNode) {
+            infoDiv.remove();
+        }
+    }, 10000);
+}
+
+// Charger la clé API au chargement de la page
+window.addEventListener('DOMContentLoaded', function() {
+    loadApiKey();
+});
+</script>
 </script>
 
   
@@ -473,12 +752,46 @@ function valider(){
 							</select>
 						</div>
 						
-			            <div class="mb-3">
-                          <label class="form-label" for="titre">Intitulé du poste</label>
-						  <input class="form-control" type="texte" id="titre" name="titre" placeholder="N'oubliez pas le H/F ou d'écrire le poste au masculin et feminin" maxlength="78" value="" required="">
-				        </div>
+			            <div class="mb-3">
+                          <label class="form-label" for="titre">Intitulé du poste</label>
+						  <div class="input-group">
+							  <input class="form-control" type="text" id="titre" name="titre" placeholder="N'oubliez pas le H/F ou d'écrire le poste au masculin et feminin" maxlength="78" value="" required="">
+							  <button class="btn btn-primary" type="button" id="aiAutofillBtn" onclick="aiAutofill()">
+								  <i class="bx bx-brain"></i> Auto-remplir avec IA
+							  </button>
+						  </div>
+				        </div>
 
-									            <div class="mb-3">						
+						<!-- Configuration API Gemini -->
+						<div class="mb-3">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">
+										<i class="bx bx-key"></i> Configuration API Gemini
+									</h6>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<label class="form-label" for="geminiApiKey">Clé API Gemini</label>
+										<div class="input-group">
+											<input class="form-control" type="password" id="geminiApiKey" placeholder="Entrez votre clé API Gemini" value="">
+											<button class="btn btn-outline-secondary" type="button" onclick="toggleApiKeyVisibility()">
+												<i class="bx bx-show" id="toggleIcon"></i>
+											</button>
+											<button class="btn btn-success" type="button" onclick="saveApiKey()">
+												<i class="bx bx-save"></i> Sauvegarder
+											</button>
+										</div>
+										<div class="form-text">
+											<small>
+												<i class="bx bx-info-circle"></i> 
+												Obtenez votre clé API gratuite sur <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
+											</small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>									            <div class="mb-3">						
 						<label class="form-label">Secteur d'activité</label>
 						<select class="form-select" name="perso2" required="">
 							<option value="">Sélectionnez un secteur d'activité</option>
@@ -559,6 +872,61 @@ function valider(){
 							</select>
 						</div>
 						</div>						
+												
+						<!-- Champs remplis automatiquement par l'IA -->
+						<div class="mb-3">
+							<label class="form-label" for="description">Description du poste</label>
+							<div class="form-text" style="margin-top:-5px">
+								Ce champ peut être rempli automatiquement par l'IA basé sur l'intitulé du poste
+							</div>
+							<textarea class="form-control" id="description" name="description" rows="4" placeholder="Description détaillée du poste, missions, responsabilités..." maxlength="1000" onkeyup="MaxLengthTextarea(this,1000)"></textarea>
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label" for="competences">Compétences requises</label>
+							<div class="form-text" style="margin-top:-5px">
+								Ce champ peut être rempli automatiquement par l'IA
+							</div>
+							<textarea class="form-control" id="competences" name="competences" rows="3" placeholder="Compétences techniques, soft skills, certifications..." maxlength="500" onkeyup="MaxLengthTextarea(this,500)"></textarea>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label" for="type_contrat">Type de contrat</label>
+									<select class="form-select" id="type_contrat" name="type_contrat" required="">
+										<option value="">Sélectionnez un type de contrat</option>
+										<option value="CDI">CDI</option>
+										<option value="CDD">CDD</option>
+										<option value="Stage">Stage</option>
+										<option value="Interim">Interim</option>
+										<option value="Freelance">Freelance</option>
+										<option value="Apprentissage">Apprentissage</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label" for="experience_min">Expérience minimale (années)</label>
+									<input class="form-control" type="number" id="experience_min" name="experience_min" placeholder="0" min="0" max="20">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label" for="salaire_min">Salaire minimum (€)</label>
+									<input class="form-control" type="number" id="salaire_min" name="salaire_min" placeholder="25000" min="0" step="1000">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="mb-3">
+									<label class="form-label" for="salaire_max">Salaire maximum (€)</label>
+									<input class="form-control" type="number" id="salaire_max" name="salaire_max" placeholder="35000" min="0" step="1000">
+								</div>
+							</div>
+						</div>
 												
 																		
 			            <div class="mb-3">
