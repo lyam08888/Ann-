@@ -711,192 +711,67 @@ window.addEventListener('DOMContentLoaded', function() {
     <script src="assets/js/config.js"></script>
   </head>
 
-  <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-	  
-		        <!-- Menu Admin-->
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="https://www.jobposting.pro/dashboard/" class="app-brand-link">
-				<img style="width:100%;height:auto" src="https://www.jobposting.pro/images/logo-jobposting.png" alt="logo jobposting">
-            </a>
+  <body>
+    <!-- Header moderne fixe -->
+    <div class="modern-fixed-header">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="brand-modern">
+              <i class="bx bx-rocket brand-icon-modern"></i>
+              <span class="brand-text-modern">JobPosting AI</span>
+            </div>
+          </div>
+          <div class="col-md-6 text-end">
+            <div class="header-controls">
+              <div class="credits-display">
+                <i class="bx bx-diamond"></i>
+                <span>9999 Crédits</span>
+              </div>
+              <div class="user-display">
+                <img src="https://www.jobposting.pro/logos/100854.png" alt="Avatar" class="user-avatar-modern">
+                <span class="user-name-modern">Lyes AMARA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
+    <!-- Interface moderne sans menu -->
+    <div class="modern-container">
+      
+      <!-- Header moderne -->
+      <header class="modern-header">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="brand-section">
+                <i class="bx bx-rocket brand-icon"></i>
+                <h1 class="brand-title">JobPosting AI</h1>
+                <p class="brand-subtitle">Créez des offres d'emploi intelligemment</p>
+              </div>
+            </div>
+            <div class="col-md-6 text-end">
+              <div class="user-section">
+                <div class="credits-badge">
+                  <i class="bx bx-diamond"></i>
+                  <span>9999 Crédits</span>
+                </div>
+                <div class="user-info">
+                  <img src="https://www.jobposting.pro/logos/100854.png" alt="Avatar" class="user-avatar">
+                  <div class="user-details">
+                    <span class="user-name">Lyes AMARA</span>
+                    <span class="user-role">Admin</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-          <div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1 overflow-auto">
-            <!-- Dashboard -->
-            <li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Tableau de bord</div>
-              </a>
-            </li>
-			<!-- Menu -->
-			<li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Menu</span>
-            </li>
-            <li class="menu-item active">
-              <a href="https://www.jobposting.pro/dashboard/publier-offre" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-rocket"></i>
-                <div data-i18n="Basic">Publier une offre</div>
-              </a>
-            </li>
-			<li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/applicants" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                <div data-i18n="Basic">Candidats</div>
-              </a>
-            </li>
-			<li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/statistiques" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-stats"></i>
-                <div data-i18n="Basic">Statistiques</div>
-              </a>
-            </li>
-			<li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/agenda" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Basic">Agenda</div>
-              </a>
-            </li>
-			<li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/tarifs" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cart-alt"></i>
-                <div data-i18n="Basic">Tarifs</div>
-              </a>
-            </li>
-			<li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/cv-online" target="_blank" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-file-find"></i>
-                <div data-i18n="Basic">Rechercher des CV</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/parametres" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cog"></i>
-                <div data-i18n="Basic">Paramètres</div>
-              </a>
-            </li>
-
-            <!-- aide -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Aide</span></li>
-            <li class="menu-item" style="">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Form Layouts">Contact</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="mailto:contact@jobposting.pro" class="menu-link">
-                    <div data-i18n="Vertical Form">contact@jobposting.pro</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="tel:+33638032541" class="menu-link">
-                    <div data-i18n="Horizontal Form">+33(0)6 38 03 25 41</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="https://www.jobposting.pro/dashboard/documentation" target="_blank" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-help-circle"></i>
-                <div data-i18n="Documentation">FAQ / Documentation</div>
-              </a>
-            </li>
-          </ul>
-        </aside>
-        <!-- / Menu -->
-
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
-
-          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="bx bx-menu bx-sm"></i>
-              </a>
-            </div>
-
-            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Crédits</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <a href="https://www.jobposting.pro/dashboard/tarifs"><h6 class="mb-0 badge bg-label-secondary" style="font-size:1.2em !important">9999</h6></a>
-                            </div>
-                          </div>
-              </div>
-              <!-- /Search -->
-
-              <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="https://www.jobposting.pro/logos/100854.png" alt="avatar" class="w-px-40 h-auto rounded-circle">
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="https://www.jobposting.pro/logos/100854.png" alt="" class="w-px-40 h-auto rounded-circle">
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Lyes AMARA</span>
-                            <small class="text-muted">Admin</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="https://www.jobposting.pro/dashboard/parametres">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">Mon Profil</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="https://www.jobposting.pro/dashboard/parametres">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Paramètres</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="https://www.jobposting.pro/deconnexion">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Déconnexion</span>
-                      </a>
-                    </li>
-                  </ul>
-				</li>
-			  </ul>
-            </div>
-          </nav>
-
-          <!-- / Navbar -->
-		
-<style>
+      <!-- Contenu principal --><style>
 .lds-default {
   display: inline-block;
   position: relative;
@@ -1772,19 +1647,301 @@ En tant que partenaire privilégié des entreprises prestigieuses, LTd Recruteme
 				</div>
 			</div>
 		</div>
+      </div>
+      
+      <!-- Footer moderne -->
+      <footer class="modern-footer">
+          <div class="container-fluid">
+              <div class="text-center py-3">
+                  <p class="mb-0 text-white-50">
+                      © 2025 JobPosting AI - Créé avec ❤️ pour simplifier le recrutement
+                  </p>
+              </div>
+          </div>
+      </footer>
+    </div>
 
-		<footer class="content-footer footer bg-footer-theme">
-			<div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-				<div class="mb-2 mb-md-0">
-					© 2025
-				</div>
-			</div>
-		</footer>
-
-		<div class="content-backdrop fade"></div>
-	</div>
-</div>
-</div>
+    <!-- CSS moderne ajouté -->
+    <style>
+    /* INTERFACE MODERNE - OVERRIDES */
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        padding-top: 80px !important;
+    }
+    
+    /* Header moderne fixe */
+    .modern-fixed-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 15px 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        z-index: 1000;
+        animation: slideDown 0.5s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .brand-modern {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .brand-icon-modern {
+        font-size: 32px;
+        color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .brand-text-modern {
+        font-size: 24px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .credits-display {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #333;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .user-display {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .user-avatar-modern {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid #667eea;
+        object-fit: cover;
+    }
+    
+    .user-name-modern {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 14px;
+    }
+    
+    .layout-wrapper {
+        background: transparent !important;
+    }
+    
+    .content-wrapper {
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    
+    .container-xxl {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 40px 20px !important;
+    }
+    
+    /* Header personnalisé */
+    h4.fw-bold {
+        display: none !important;
+    }
+    
+    .container-xxl::before {
+        content: "🚀 Créer une Offre d'Emploi";
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: white;
+        text-align: center;
+        margin-bottom: 10px;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .container-xxl::after {
+        content: "Utilisez notre intelligence artificielle pour générer automatiquement des offres d'emploi professionnelles et attractives";
+        display: block;
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        margin: 0 auto 40px auto;
+        max-width: 700px;
+        line-height: 1.7;
+        font-weight: 300;
+    }
+    
+    .modern-footer {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        margin-top: 50px;
+    }
+    
+    .card {
+        border-radius: 20px !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .form-control {
+        border-radius: 10px !important;
+        border: 2px solid #e9ecef !important;
+        padding: 12px 15px !important;
+        font-size: 14px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+        transform: translateY(-1px) !important;
+    }
+    
+    .form-select {
+        border-radius: 10px !important;
+        border: 2px solid #e9ecef !important;
+        padding: 12px 15px !important;
+    }
+    
+    .form-select:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+    }
+    
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 15px 30px !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+        font-size: 16px !important;
+    }
+    
+    .btn-gradient-primary:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6) !important;
+        color: white !important;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 15px 30px !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6) !important;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+    }
+    
+    .form-label {
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+        margin-bottom: 8px !important;
+        font-size: 14px !important;
+    }
+    
+    .alert {
+        border-radius: 12px !important;
+        border: none !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+        font-weight: 500 !important;
+    }
+    
+    .alert-info {
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%) !important;
+        color: white !important;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #00b894 0%, #00a085 100%) !important;
+        color: white !important;
+    }
+    
+    .alert-warning {
+        background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%) !important;
+        color: white !important;
+    }
+    
+    .alert-danger {
+        background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%) !important;
+        color: white !important;
+    }
+    
+    /* Animation d'entrée */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .card {
+        animation: fadeInUp 0.6s ease-out !important;
+    }
+    
+    @media (max-width: 768px) {
+        .container-xxl::after {
+            font-size: 2.5rem !important;
+        }
+    }
+    </style>
 
 <script src="assets/vendor/libs/jquery/jquery.js"></script>
 <script src="assets/vendor/libs/popper/popper.js"></script>
