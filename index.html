@@ -696,17 +696,17 @@ window.addEventListener('DOMContentLoaded', function() {
 
     <!-- Page CSS -->
 
-    <!-- Helpers -->
-    <script src="assets/vendor/js/helpers.js"></script><style type="text/css">
+    <!-- Helpers -->
+    <script src="assets/vendor/js/helpers.js"></script>
+    <style type="text/css">
 .layout-menu-fixed .layout-navbar-full .layout-menu,
 .layout-page {
-  padding-top: 0px !important;
+  padding-top: 0px !important;
 }
 .content-wrapper {
-  padding-bottom: 0px !important;
-}</style>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  padding-bottom: 0px !important;
+}
+    </style>    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="assets/js/config.js"></script>
   </head>
@@ -982,15 +982,15 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 #spinner-overlay {
-    position:fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background: rgba(0,0,0,0.8);
-    visibility: hidden;
-    z-index:10000;
-	padding:50%
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.8);
+    visibility: hidden;
+    z-index:10000;
+	padding:50%;
 }
 
 /* Styles pour les notifications personnalisées */
@@ -1044,12 +1044,209 @@ window.addEventListener('DOMContentLoaded', function() {
 .bx-spin {
     animation: spin 1s linear infinite;
 }
+
+/* Interface améliorée */
+.btn-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-gradient-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 0.85em;
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    color: white;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    color: white;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+    color: white;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+    color: white;
+}
+
+/* Animations pour les notifications */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Effet de pulse pour les champs en cours d'auto-completion */
+.ai-filling {
+    animation: aiPulse 1.5s infinite;
+}
+
+@keyframes aiPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
+/* Style pour le spinner amélioré */
+#spinner-overlay {
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#spinner-overlay .lds-default {
+    margin-bottom: 20px;
+}
+
+.spinner-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Boutons d'action améliorés */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Indicateurs de progression */
+.progress-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #f8f9fa;
+    z-index: 9999;
+}
+
+.progress-bar-ai {
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+}
+
+/* Responsive amélioré */
+@media (max-width: 768px) {
+    .btn-gradient-primary {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .card {
+        margin: 10px;
+        border-radius: 10px;
+    }
+}
 </style>
 
 <div id="spinner-overlay">
 	<div id="spinner" class="lds-default">
 		<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
 	</div>
+	<div class="spinner-text">
+		<i class="bx bx-magic-wand me-2"></i>
+		Intelligence Artificielle en cours...
+		<br>
+		<small>Auto-complétion des champs</small>
+	</div>
+</div>
+
+<!-- Indicateur de progression -->
+<div class="progress-indicator" id="progress-indicator" style="display: none;">
+	<div class="progress-bar-ai" id="progress-bar" style="width: 0%;"></div>
 </div>
 
 <script>
@@ -1315,15 +1512,17 @@ function valider(){
 								<option value="BE">Belgique</option>
 								<option value="CH">Suisse</option>								
 								<option value="LU">Luxembourg</option>
-								<option value="ES">Espagne</option
-								<option value="IT">Italie</option>								<option value="NL">Pays-Bas</option>
+								<option value="ES">Espagne</option>
+								<option value="IT">Italie</option>
+								<option value="NL">Pays-Bas</option>
 								<option value="PL">Poland</option>
 								<option value="PT">Portugal</option>
 								<option value="GB">United Kingdom</option>
 								<option value="CA">Canada</option>
 								<option value="EG">Egypt</option>
-								<option value="MA">Maroc</option>	
-								<option value="TN">Tunisie</option>									<option value="AE">United Arab Emirates</option>
+								<option value="MA">Maroc</option>
+								<option value="TN">Tunisie</option>
+								<option value="AE">United Arab Emirates</option>
 								<option value="QA">Qatar</option>
 								<option value="SA">Saudi Arabia</option>
 								<option value="BH">Bahrain</option>
@@ -1594,6 +1793,511 @@ En tant que partenaire privilégié des entreprises prestigieuses, LTd Recruteme
 <script src="assets/vendor/js/menu.js"></script>
 <script src="assets/js/main.js"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script>
+// Configuration API Gemini
+const GEMINI_API_KEY = 'AIzaSyDqBt8kQLkqOwrOJ8xWOaZ_hvbTBpPkINo';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+
+// Interface utilisateur améliorée
+let isAutoFilling = false;
+
+// Fonction pour afficher les notifications
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type} alert-dismissible position-fixed`;
+    notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    notification.innerHTML = `
+        <i class="bx ${type === 'success' ? 'bx-check-circle' : 'bx-error-circle'}"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+// Fonction pour afficher le spinner avec progression
+function showSpinner() {
+    document.getElementById('spinner-overlay').style.visibility = 'visible';
+    document.getElementById('progress-indicator').style.display = 'block';
+    updateProgress(0);
+}
+
+// Fonction pour masquer le spinner
+function hideSpinner() {
+    document.getElementById('spinner-overlay').style.visibility = 'hidden';
+    document.getElementById('progress-indicator').style.display = 'none';
+}
+
+// Fonction pour mettre à jour la progression
+function updateProgress(percentage) {
+    document.getElementById('progress-bar').style.width = percentage + '%';
+}
+
+// Fonction pour animer un champ pendant son auto-complétion
+function animateField(fieldId) {
+    const field = document.getElementById(fieldId);
+    if (field) {
+        field.classList.add('ai-filling');
+        setTimeout(() => {
+            field.classList.remove('ai-filling');
+        }, 2000);
+    }
+}
+
+// Fonction pour appeler l'API Gemini
+async function callGeminiAPI(prompt) {
+    try {
+        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1024,
+                }
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            return data.candidates[0].content.parts[0].text.trim();
+        } else {
+            throw new Error('Réponse inattendue de l\'API');
+        }
+    } catch (error) {
+        console.error('Erreur API Gemini:', error);
+        throw error;
+    }
+}
+
+// Fonction principale d'auto-complétion basée sur l'intitulé du poste
+async function autoFillFromJobTitle() {
+    const jobTitle = document.getElementById('intitule').value.trim();
+    
+    if (!jobTitle) {
+        showNotification('Veuillez d\'abord saisir un intitulé de poste', 'warning');
+        return;
+    }
+
+    if (isAutoFilling) {
+        showNotification('Auto-complétion en cours...', 'info');
+        return;
+    }
+
+    isAutoFilling = true;
+    showSpinner();
+    
+    const totalSteps = 10;
+    let currentStep = 0;
+    
+    try {
+        showNotification('🤖 Début de l\'auto-complétion intelligente...', 'info');
+
+        // 1. Auto-complétion du secteur d'activité
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('secteur');
+        await autoFillSector(jobTitle);
+        
+        // 2. Auto-complétion du type de contrat
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('contrat');
+        await autoFillContractType(jobTitle);
+        
+        // 3. Auto-complétion du temps de travail
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('temps_travail');
+        await autoFillWorkTime(jobTitle);
+        
+        // 4. Auto-complétion du télétravail
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('teletravail');
+        await autoFillRemoteWork(jobTitle);
+        
+        // 5. Auto-complétion de l'expérience requise
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('experience');
+        await autoFillExperience(jobTitle);
+        
+        // 6. Auto-complétion du diplôme
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('diplome');
+        await autoFillEducation(jobTitle);
+        
+        // 7. Auto-complétion du salaire
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('sal');
+        await autoFillSalary(jobTitle);
+        
+        // 8. Auto-complétion de la description du poste
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('description_poste');
+        await autoFillJobDescription(jobTitle);
+        
+        // 9. Auto-complétion du profil recherché
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('profil');
+        await autoFillProfile(jobTitle);
+        
+        // 10. Auto-complétion des détails de rémunération
+        currentStep++;
+        updateProgress((currentStep / totalSteps) * 100);
+        animateField('details_remuneration');
+        await autoFillRemuneration(jobTitle);
+
+        updateProgress(100);
+        showNotification('✅ Auto-complétion terminée avec succès! Tous les champs ont été remplis intelligemment.', 'success');
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'auto-complétion:', error);
+        showNotification('❌ Erreur lors de l\'auto-complétion: ' + error.message, 'danger');
+    } finally {
+        isAutoFilling = false;
+        setTimeout(() => {
+            hideSpinner();
+        }, 1000); // Délai pour voir la progression à 100%
+    }
+}
+
+// Fonctions spécialisées pour chaque champ
+
+async function autoFillSector(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quel est le secteur d'activité le plus approprié parmi ces options?
+    
+    Options disponibles: artisanat, agriculture, automobile, btp-construction, chimie-pharmacie, commerce-distribution, communication-marketing, conseil-audit, culture-sport, defense-securite, economie-sociale, edition-imprimerie, electronique, enseignement-formation, environnement, finance-banque, fonction-publique, industrie, informatique-digital, logistique-transport, luxe, maintenance, ressources-humaines, restauration-hotellerie, sante-medico-social, services-entreprise, social, textile, tourisme-loisirs
+    
+    Réponds uniquement par la valeur exacte de l'option (ex: "informatique-digital")`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500)); // Délai réaliste
+        const sector = await callGeminiAPI(prompt);
+        const sectorSelect = document.getElementById('secteur');
+        const cleanSector = sector.toLowerCase().replace(/[^a-z-]/g, '');
+        
+        for (let option of sectorSelect.options) {
+            if (option.value === cleanSector) {
+                sectorSelect.value = cleanSector;
+                sectorSelect.dispatchEvent(new Event('change'));
+                break;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur secteur:', error);
+    }
+}
+
+async function autoFillContractType(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quel type de contrat est le plus approprié?
+    
+    Options: cdi, cdd, stage, freelance-auto-entrepreneur, interim, alternance-apprentissage, franchise, portage-salarial
+    
+    Réponds uniquement par la valeur exacte (ex: "cdi")`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const contract = await callGeminiAPI(prompt);
+        const contractSelect = document.getElementById('contrat');
+        const cleanContract = contract.toLowerCase().replace(/[^a-z-]/g, '');
+        
+        for (let option of contractSelect.options) {
+            if (option.value === cleanContract) {
+                contractSelect.value = cleanContract;
+                contractSelect.dispatchEvent(new Event('change'));
+                break;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur contrat:', error);
+    }
+}
+
+async function autoFillWorkTime(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quel temps de travail est le plus courant?
+    
+    Options: temps-plein, temps-partiel
+    
+    Réponds uniquement par "temps-plein" ou "temps-partiel"`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const workTime = await callGeminiAPI(prompt);
+        const workTimeSelect = document.getElementById('temps_travail');
+        const cleanWorkTime = workTime.toLowerCase().replace(/[^a-z-]/g, '');
+        
+        if (cleanWorkTime.includes('plein')) {
+            workTimeSelect.value = 'temps-plein';
+        } else if (cleanWorkTime.includes('partiel')) {
+            workTimeSelect.value = 'temps-partiel';
+        }
+        workTimeSelect.dispatchEvent(new Event('change'));
+    } catch (error) {
+        console.error('Erreur temps de travail:', error);
+    }
+}
+
+async function autoFillRemoteWork(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quelle est la politique de télétravail la plus probable?
+    
+    Options: non, possible, partiel, total, occasionnel, hybride
+    
+    Réponds uniquement par l'une de ces valeurs exactes`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const remote = await callGeminiAPI(prompt);
+        const remoteSelect = document.getElementById('teletravail');
+        const cleanRemote = remote.toLowerCase().replace(/[^a-z]/g, '');
+        
+        for (let option of remoteSelect.options) {
+            if (option.value === cleanRemote) {
+                remoteSelect.value = cleanRemote;
+                remoteSelect.dispatchEvent(new Event('change'));
+                break;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur télétravail:', error);
+    }
+}
+
+async function autoFillExperience(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quel niveau d'expérience est généralement requis?
+    
+    Options: debutant, 1-an, 2-ans, 3-ans, 5-ans, 10-ans, 15-ans
+    
+    Réponds uniquement par l'une de ces valeurs exactes`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const experience = await callGeminiAPI(prompt);
+        const experienceSelect = document.getElementById('experience');
+        const cleanExperience = experience.toLowerCase().replace(/[^a-z0-9-]/g, '');
+        
+        for (let option of experienceSelect.options) {
+            if (option.value === cleanExperience) {
+                experienceSelect.value = cleanExperience;
+                experienceSelect.dispatchEvent(new Event('change'));
+                break;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur expérience:', error);
+    }
+}
+
+async function autoFillEducation(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", quel niveau de diplôme est généralement requis?
+    
+    Options: non-requis, cap-bep, bac, bac2, bac3, bac5, bac8
+    
+    Réponds uniquement par l'une de ces valeurs exactes`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const education = await callGeminiAPI(prompt);
+        const educationSelect = document.getElementById('diplome');
+        const cleanEducation = education.toLowerCase().replace(/[^a-z0-9-]/g, '');
+        
+        for (let option of educationSelect.options) {
+            if (option.value === cleanEducation) {
+                educationSelect.value = cleanEducation;
+                educationSelect.dispatchEvent(new Event('change'));
+                break;
+            }
+        }
+    } catch (error) {
+        console.error('Erreur diplôme:', error);
+    }
+}
+
+async function autoFillSalary(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}" en France, quel est le salaire annuel brut moyen en k€?
+    
+    Options: 18, 20, 22, 25, 28, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 120, 150, 200
+    
+    Réponds uniquement par le chiffre le plus approprié`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const salary = await callGeminiAPI(prompt);
+        const salarySelect = document.getElementById('sal');
+        const cleanSalary = salary.replace(/[^0-9]/g, '');
+        
+        if (cleanSalary) {
+            for (let option of salarySelect.options) {
+                if (option.value === cleanSalary) {
+                    salarySelect.value = cleanSalary;
+                    salarySelect.dispatchEvent(new Event('change'));
+                    break;
+                }
+            }
+            
+            // Auto-remplir aussi les champs min/max
+            const salaryNum = parseInt(cleanSalary);
+            document.getElementById('salmin').value = Math.max(15, salaryNum - 5);
+            document.getElementById('salmax').value = salaryNum + 10;
+        }
+    } catch (error) {
+        console.error('Erreur salaire:', error);
+    }
+}
+
+async function autoFillJobDescription(jobTitle) {
+    const prompt = `Rédige une description de poste professionnelle pour "${jobTitle}" en français. 
+    
+    Consignes importantes:
+    - Minimum 200 caractères
+    - Ne pas utiliser les mots: junior, senior, jeune, COVID
+    - Ne pas mentionner d'adresse mail ou URL
+    - Décrire les missions, responsabilités et objectifs
+    - Style professionnel et engageant
+    - Maximum 3000 caractères`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Plus long pour les textes
+        const description = await callGeminiAPI(prompt);
+        document.getElementById('description_poste').value = description;
+        document.getElementById('description_poste').dispatchEvent(new Event('input'));
+    } catch (error) {
+        console.error('Erreur description poste:', error);
+    }
+}
+
+async function autoFillProfile(jobTitle) {
+    const prompt = `Rédige un profil candidat recherché pour "${jobTitle}" en français.
+    
+    Consignes importantes:
+    - Minimum 100 caractères
+    - Utiliser "expérience minimale de X ans" ou "au moins X ans d'expérience" 
+    - Ne jamais écrire "X à Y années" ou "entre X et Y ans"
+    - Ne pas mentionner d'adresse mail, téléphone ou URL
+    - Décrire formations, compétences, qualités requises
+    - Maximum 2500 caractères`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const profile = await callGeminiAPI(prompt);
+        document.getElementById('profil').value = profile;
+        document.getElementById('profil').dispatchEvent(new Event('input'));
+    } catch (error) {
+        console.error('Erreur profil:', error);
+    }
+}
+
+async function autoFillRemuneration(jobTitle) {
+    const prompt = `Pour le poste "${jobTitle}", rédige une description attractive de la rémunération et des avantages en français (maximum 300 caractères). Inclure salaire, avantages sociaux, primes éventuelles.`;
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const remuneration = await callGeminiAPI(prompt);
+        document.getElementById('details_remuneration').value = remuneration;
+        document.getElementById('details_remuneration').dispatchEvent(new Event('input'));
+    } catch (error) {
+        console.error('Erreur rémunération:', error);
+    }
+}
+
+// Fonctions utilitaires
+function MaxLengthTextarea(obj, MaxLen) {
+    if (obj.value.length > MaxLen) {
+        obj.value = obj.value.substring(0, MaxLen);
+    }
+    // Mise à jour du compteur si présent
+    const counter = obj.parentNode.querySelector('.char-counter');
+    if (counter) {
+        counter.textContent = `${obj.value.length}/${MaxLen}`;
+    }
+}
+
+function salChange() {
+    // Fonction existante pour le changement de salaire
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter le bouton d'auto-complétion après le champ intitulé
+    const intituleField = document.getElementById('intitule');
+    if (intituleField && intituleField.parentNode) {
+        const autoFillButton = document.createElement('button');
+        autoFillButton.type = 'button';
+        autoFillButton.className = 'btn btn-gradient-primary mt-2 w-100';
+        autoFillButton.innerHTML = '<i class="bx bx-magic-wand me-2"></i>🤖 Auto-compléter avec IA';
+        autoFillButton.onclick = autoFillFromJobTitle;
+        
+        intituleField.parentNode.appendChild(autoFillButton);
+    }
+
+    // Ajouter des compteurs de caractères pour les textareas
+    const textareas = document.querySelectorAll('textarea[maxlength]');
+    textareas.forEach(textarea => {
+        const maxLength = textarea.getAttribute('maxlength');
+        const counter = document.createElement('div');
+        counter.className = 'char-counter text-muted small mt-1';
+        counter.textContent = `0/${maxLength}`;
+        textarea.parentNode.appendChild(counter);
+        
+        textarea.addEventListener('input', function() {
+            counter.textContent = `${this.value.length}/${maxLength}`;
+            if (this.value.length > maxLength * 0.9) {
+                counter.className = 'char-counter text-warning small mt-1';
+            } else {
+                counter.className = 'char-counter text-muted small mt-1';
+            }
+        });
+    });
+
+    // Sauvegarde automatique
+    const form = document.querySelector('form');
+    if (form) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                localStorage.setItem(`form_${this.name || this.id}`, this.value);
+            });
+        });
+
+        // Restaurer les valeurs sauvegardées
+        inputs.forEach(input => {
+            const savedValue = localStorage.getItem(`form_${input.name || input.id}`);
+            if (savedValue && !input.value) {
+                input.value = savedValue;
+            }
+        });
+    }
+});
+</script>
 
 </body>
 </html>
