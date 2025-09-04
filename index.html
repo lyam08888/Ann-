@@ -353,15 +353,25 @@ async function aiAutofill() {
 {
   "secteur": "un des secteurs suivants: Agro-alimentaire, Architecture, Banque - Finance - Assurance, BIM Bâtiment - Génie Civil, Commercial, Conseil - Audit - Juridique, Eau et Environnement, Encadrement de Chantier Bâtiment - Génie Civil, Encadrement de Chantier TP / VRD, Exécution de Chantier Bâtiment - Génie Civil, Génie Climatique, Génie Electrique, Géomètre Topographe, Immobilier, Infrastructure Télécom, Ingénierie Bâtiment, Ingénierie Génie Civil, Ingénierie VRD, Maintenance Technique, Management de projet - MOEX, Marketing & Communication, Mécanique Générale, Mode & Luxe, NTIC - Digital, Paysagiste, Ressources Humaines, Santé, Tertiaire Technique, Transport-Logistique",
   "metier": "un des métiers suivants: Achat - Import - Export, Agriculture - Environnement, Assistanat - Secrétariat, Automobile, BTP, Commerce - Distribution, Commercial - Vente, Comptabilité - Gestion - Finance, Direction - Responsable centre de profit, Fonction publique, Immobilier, Industrie - Production, Informatique - Internet - Télécom, Ingénierie/Bureau Etudes, Juridique - Droit, Marketing - Communication, Ressources humaines, Santé - Social, Sécurité, Services à la personne, Hôtellerie - Restauration - Tourisme, Transport - Logistique",
-  "description": "une description détaillée du poste en 3-4 phrases",
+  "description": "une description concise du poste en 2-3 phrases (max 200 mots)",
+  "description_poste": "description détaillée du poste avec missions principales, responsabilités, objectifs (400-800 mots)",
+  "profil": "description du profil recherché avec formations, compétences, qualités requises (300-600 mots)",
   "competences": "liste des compétences requises séparées par des virgules",
   "salaire_min": "salaire minimum estimé en euros (nombre uniquement)",
   "salaire_max": "salaire maximum estimé en euros (nombre uniquement)",
+  "salmin": "salaire minimum en milliers d'euros (ex: 35 pour 35k€)",
+  "salmax": "salaire maximum en milliers d'euros (ex: 45 pour 45k€)",
   "type_contrat": "CDI, CDD, Stage, Interim, Freelance, ou Apprentissage",
-  "experience": "nombre d'années d'expérience minimum requis (nombre uniquement)"
+  "contrat": "CDI, CDD, STAGE, INTERIM, FREELANCE, ou APPRENTISSAGE",
+  "experience": "nombre d'années d'expérience minimum requis (nombre uniquement)",
+  "experience_niveau": "1 pour Débutant, 2 pour 1-3 ans, 3 pour 3-5 ans, 4 pour 5-10 ans, 5 pour +10 ans",
+  "diplome": "1 pour Inférieur au BAC, 2 pour BAC, 3 pour BAC+2, 4 pour BAC+3, 5 pour BAC+5 et plus",
+  "temps_travail": "1 pour Temps plein, 2 pour Temps partiel",
+  "teletravail": "1 pour Aucun, 2 pour Occasionnel, 3 pour Régulier, 4 pour Total",
+  "statut": "1 pour Employé, 2 pour Agent de maîtrise, 3 pour Cadre"
 }
 
-Réponds uniquement avec le JSON, sans texte supplémentaire.`;
+IMPORTANT: Réponds uniquement avec le JSON, sans texte supplémentaire. Assure-toi que tous les champs numériques sont bien des nombres sans guillemets.`;
 
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
             method: 'POST',
@@ -586,6 +596,105 @@ function fillFormWithAIData(jobData) {
         }
     }
 
+    // Remplir description détaillée du poste
+    if (jobData.description_poste) {
+        const descPosteField = document.getElementById('description_poste');
+        if (descPosteField) {
+            descPosteField.value = jobData.description_poste;
+            filledFieldsCount++;
+            filledFields.push('Description poste');
+        }
+    }
+
+    // Remplir profil recherché
+    if (jobData.profil) {
+        const profilField = document.getElementById('profil');
+        if (profilField) {
+            profilField.value = jobData.profil;
+            filledFieldsCount++;
+            filledFields.push('Profil recherché');
+        }
+    }
+
+    // Remplir contrat principal
+    if (jobData.contrat) {
+        const contratField = document.getElementById('contrat');
+        if (contratField) {
+            contratField.value = jobData.contrat;
+            filledFieldsCount++;
+            filledFields.push('Contrat');
+        }
+    }
+
+    // Remplir niveau d'expérience
+    if (jobData.experience_niveau) {
+        const expNiveauField = document.getElementById('experience');
+        if (expNiveauField) {
+            expNiveauField.value = jobData.experience_niveau;
+            filledFieldsCount++;
+            filledFields.push('Niveau expérience');
+        }
+    }
+
+    // Remplir diplôme
+    if (jobData.diplome) {
+        const diplomeField = document.getElementById('diplome');
+        if (diplomeField) {
+            diplomeField.value = jobData.diplome;
+            filledFieldsCount++;
+            filledFields.push('Diplôme');
+        }
+    }
+
+    // Remplir statut
+    if (jobData.statut) {
+        const statutField = document.getElementById('statut');
+        if (statutField) {
+            statutField.value = jobData.statut;
+            filledFieldsCount++;
+            filledFields.push('Statut');
+        }
+    }
+
+    // Remplir temps de travail
+    if (jobData.temps_travail) {
+        const tempsField = document.getElementById('temps_travail');
+        if (tempsField) {
+            tempsField.value = jobData.temps_travail;
+            filledFieldsCount++;
+            filledFields.push('Temps de travail');
+        }
+    }
+
+    // Remplir télétravail
+    if (jobData.teletravail) {
+        const teletravailField = document.getElementById('teletravail');
+        if (teletravailField) {
+            teletravailField.value = jobData.teletravail;
+            filledFieldsCount++;
+            filledFields.push('Télétravail');
+        }
+    }
+
+    // Remplir salaire en K€ (salmin/salmax)
+    if (jobData.salmin) {
+        const salminField = document.getElementById('salmin');
+        if (salminField) {
+            salminField.value = jobData.salmin;
+            filledFieldsCount++;
+            filledFields.push('Salaire min K€');
+        }
+    }
+
+    if (jobData.salmax) {
+        const salmaxField = document.getElementById('salmax');
+        if (salmaxField) {
+            salmaxField.value = jobData.salmax;
+            filledFieldsCount++;
+            filledFields.push('Salaire max K€');
+        }
+    }
+
     // Log des données pour debug
     const summary = `Données IA appliquées (${filledFieldsCount} champs):
 - Secteur: ${jobData.secteur || 'Non défini'}
@@ -657,6 +766,35 @@ function createSuccessAlert(jobData, filledFields) {
                 setTimeout(() => infoDiv.remove(), 500);
             }
         }, 15000);
+    }
+}
+
+// Fonction pour copier du texte dans le presse-papiers
+async function copyToClipboard(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        
+        // Trouver le bouton qui a été cliqué et afficher un feedback
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+            if (btn.onclick && btn.onclick.toString().includes(text.replace(/'/g, "\\'"))) {
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="bx bx-check"></i>';
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-outline-primary', 'btn-outline-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-primary');
+                }, 1000);
+            }
+        });
+        
+        showNotification(`✅ Texte copié: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`, 'success', 2000);
+    } catch (err) {
+        console.error('Erreur lors de la copie:', err);
+        showNotification('❌ Erreur lors de la copie dans le presse-papiers', 'error');
     }
 }
 
@@ -741,36 +879,6 @@ window.addEventListener('DOMContentLoaded', function() {
     <!-- Interface moderne sans menu -->
     <div class="modern-container">
       
-      <!-- Header moderne -->
-      <header class="modern-header">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <div class="brand-section">
-                <i class="bx bx-rocket brand-icon"></i>
-                <h1 class="brand-title">JobPosting AI</h1>
-                <p class="brand-subtitle">Créez des offres d'emploi intelligemment</p>
-              </div>
-            </div>
-            <div class="col-md-6 text-end">
-              <div class="user-section">
-                <div class="credits-badge">
-                  <i class="bx bx-diamond"></i>
-                  <span>9999 Crédits</span>
-                </div>
-                <div class="user-info">
-                  <img src="https://www.jobposting.pro/logos/100854.png" alt="Avatar" class="user-avatar">
-                  <div class="user-details">
-                    <span class="user-name">Lyes AMARA</span>
-                    <span class="user-role">Admin</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <!-- Contenu principal --><style>
 .lds-default {
   display: inline-block;
@@ -1136,41 +1244,77 @@ function valider(){
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-3"><i class="menu-icon bx bx-rocket"></i>Publier une offre d'emploi</h4>
-							<div class="card accordion-item mb-3">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="false" aria-controls="accordionOne">
-                          ✋ Quelles sont les critères de rédaction à respecter pour une multi-diffusion optimale ?
-                        </button>
-                    </h2>
-
-                    <div id="accordionOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
-                        <div class="accordion-body">
-							Pour la plupart des sites il n'y a pas de critère spécifique...
-							<br><strong>Les plus sélectifs sont l'APEC et Pôle Emploi</strong>.
-							<br>Voici quelques règles à respecter pour assurer la diffusion de votre annonce :
-							<br><br>
-							Le motif de refus le plus courant est "discrimination", pour éviter cela vous devez :
-							<br><br>
-							<strong>1/ Ne pas indiquer d'âge ou de tranche d'expérience</strong>.
-							<br>Pour l'expérience <strong>n'écrivez jamais expérience entre X et Y années ou expérience souhaitez de X/Y années</strong>.
-							C'est la principale cause de non diffusion !
-							<br>
-							Vous devez écrire :
-							<br>Expérience de X années minimum
-							ou expérience d'au moins X années...
-							<br><strong>Donc toujours un seul chiffre associé avec "au moins" ou "minimum" ou "minimale"</strong>...
-							<br><br>
-							<strong>2/ Ne pas utiliser les mots clés suivants :</strong>
-							<br>Pré-embauche, Jeune, junior, stress, permis X obligatoire, Homme ou femme seul...
-							<br><br>
-							<strong>3/ Ne pas indiquer d'adresse mail</strong> ou de lien ou de téléphone dans dans la description de l'entreprise, du poste ou du profil.
-							<br><br>
-							<strong>4/ Vérifier le code postal</strong>, le code postal doit être valide et ne doit pas être le code INSEE de la ville.
-                        </div>
-                    </div>
-				</div>
-				
-			  <!-- Basic Layout -->
+              <!-- Templates de rédaction -->
+              <div class="card mb-4">
+                <div class="card-header bg-gradient-primary text-white">
+                  <h5 class="mb-0"><i class="bx bx-copy me-2"></i>Templates Prêts à Copier</h5>
+                  <small>Cliquez sur les boutons pour copier instantanément</small>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6 class="text-primary"><i class="bx bx-user me-1"></i>Formules d'Expérience (APEC/Pôle Emploi)</h6>
+                      <div class="template-group mb-3">
+                        <div class="template-item">
+                          <span class="template-text">Expérience minimale de 3 ans</span>
+                          <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyToClipboard('Expérience minimale de 3 ans')">
+                            <i class="bx bx-copy"></i>
+                          </button>
+                        </div>
+                        <div class="template-item">
+                          <span class="template-text">Au moins 5 ans d'expérience</span>
+                          <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyToClipboard('Au moins 5 ans d\'expérience')">
+                            <i class="bx bx-copy"></i>
+                          </button>
+                        </div>
+                        <div class="template-item">
+                          <span class="template-text">Expérience professionnelle de 2 ans minimum</span>
+                          <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyToClipboard('Expérience professionnelle de 2 ans minimum')">
+                            <i class="bx bx-copy"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-success"><i class="bx bx-check me-1"></i>Phrases Conformes</h6>
+                      <div class="template-group mb-3">
+                        <div class="template-item">
+                          <span class="template-text">Poste ouvert aux personnes en situation de handicap</span>
+                          <button class="btn btn-outline-success btn-sm copy-btn" onclick="copyToClipboard('Poste ouvert aux personnes en situation de handicap')">
+                            <i class="bx bx-copy"></i>
+                          </button>
+                        </div>
+                        <div class="template-item">
+                          <span class="template-text">Candidature motivée souhaitée</span>
+                          <button class="btn btn-outline-success btn-sm copy-btn" onclick="copyToClipboard('Candidature motivée souhaitée')">
+                            <i class="bx bx-copy"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6 class="text-danger"><i class="bx bx-x me-1"></i>Mots Interdits</h6>
+                      <div class="alert alert-light">
+                        <small class="text-muted">À éviter absolument :</small><br>
+                        <span class="badge bg-danger me-1">junior</span>
+                        <span class="badge bg-danger me-1">senior</span>
+                        <span class="badge bg-danger me-1">jeune</span>
+                        <span class="badge bg-danger me-1">stress</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-info"><i class="bx bx-help-circle me-1"></i>Aide IA</h6>
+                      <div class="d-grid">
+                        <a href="https://chatgpt.com/" target="_blank" class="btn btn-outline-info">
+                          <i class="bx bx-robot me-2"></i>ChatGPT : "modèle offre d'emploi pour [métier]"
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>			  <!-- Basic Layout -->
               <div class="row">
                 <div class="col-xl">
 	
@@ -1940,6 +2084,84 @@ En tant que partenaire privilégié des entreprises prestigieuses, LTd Recruteme
         .container-xxl::after {
             font-size: 2.5rem !important;
         }
+    }
+
+    /* Styles pour les templates de copie */
+    .template-group {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .template-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .template-item:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #667eea;
+    }
+
+    .template-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .template-text {
+        flex: 1;
+        font-size: 0.9rem;
+        color: #2c3e50;
+        margin-right: 10px;
+    }
+
+    .copy-btn {
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        font-size: 0.8rem !important;
+        transition: all 0.3s ease !important;
+        min-width: 32px;
+    }
+
+    .copy-btn:hover {
+        transform: scale(1.1) !important;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+
+    .card-header.bg-gradient-primary {
+        border-radius: 15px 15px 0 0 !important;
+    }
+
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .card-header small {
+        opacity: 0.9;
+        font-size: 0.85rem;
+    }
+
+    /* Animation pour les boutons de copie */
+    @keyframes copySuccess {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    .copy-btn.btn-success {
+        animation: copySuccess 0.3s ease;
     }
     </style>
 
