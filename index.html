@@ -1102,39 +1102,38 @@ window.addEventListener('DOMContentLoaded', function() {
 	padding:50%;
 }
 
-/* ===== DESIGN ÉPURÉ & PROFESSIONNEL V2 ===== */
+/* ===== DESIGN ULTRA-RAFFINÉ ET PROFESSIONNEL ===== */
 
-/* Variables CSS pour un design system raffiné */
+/* Variables CSS pour un design premium */
 :root {
-    /* Palette de couleurs */
-    --primary-color: #0052cc; /* Un bleu plus profond et professionnel */
-    --primary-color-light: #deebff;
-    --success-color: #00875a;
-    --danger-color: #de350b;
-    --warning-color: #ffab00;
+    /* Palette de couleurs sophistiquée */
+    --primary-color: #0052cc; /* Un bleu profond et professionnel */
+    --primary-color-light: #e6f0ff;
+    --primary-color-dark: #003e99;
     
-    /* Tons de gris neutres */
+    --success-color: #00875a; /* Vert pour le succès */
+    --warning-color: #ffab00; /* Ambre pour les avertissements */
+    --danger-color: #de350b;  /* Rouge pour les erreurs */
+    
+    /* Palette de gris neutres et équilibrés */
     --white: #ffffff;
-    --gray-50: #f8f9fa;   /* Fond légèrement texturé */
-    --gray-100: #f1f3f5;
-    --gray-200: #e9ecef;  /* Bordures subtiles */
-    --gray-300: #dee2e6;
-    --gray-500: #adb5bd;
+    --gray-50: #f8f9fa;   /* Fond de page */
+    --gray-100: #f1f3f5;  /* Bordures légères */
+    --gray-200: #e9ecef;  /* Éléments désactivés */
+    --gray-300: #dee2e6;  /* Bordures d'input */
+    --gray-500: #adb5bd;  /* Texte placeholder */
     --gray-700: #495057;  /* Texte secondaire */
     --gray-900: #212529;  /* Texte principal */
     
-    /* Textes */
-    --text-primary: var(--gray-900);
-    --text-secondary: var(--gray-700);
-    
-    /* Design System */
+    /* Typographie et espacements */
+    --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --border-radius: 6px;
-    --border-radius-lg: 10px;
-    --transition: all 0.2s ease-in-out;
-    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.1), 0 8px 16px -8px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Reset et base minimalistes */
@@ -1145,11 +1144,11 @@ window.addEventListener('DOMContentLoaded', function() {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-family-sans);
     background-color: var(--gray-50);
-    color: var(--text-primary);
-    line-height: 1.5;
-    font-size: 15px;
+    color: var(--gray-900);
+    line-height: 1.6;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -1165,36 +1164,38 @@ body {
     animation: pageEntrance 0.8s ease-out;
 }
 
-/* Header ultra-pro */
-.modern-header {
+/* Header ultra-raffiné */
+.header {
     position: sticky;
     top: 0;
     z-index: 1020;
-    background-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--gray-200);
-    box-shadow: var(--shadow-sm);
-    padding: 12px 0;
-    margin-bottom: 2rem;
+    padding: 16px 0;
+    transition: box-shadow 0.2s ease;
 }
 
-.brand-modern {
+.header-scrolled {
+    box-shadow: var(--shadow-md);
+}
+
+.header-content {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-.brand-icon-modern {
-    font-size: 2.5rem;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: iconGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes iconGlow {
-    0% { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
-    100% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8)); }
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
 }
 
 .brand-text-modern h1 {
@@ -1335,57 +1336,64 @@ body {
     border-bottom-right-radius: var(--border-radius-sm);
 }
 
-/* Boutons professionnels */
+/* Boutons ultra-raffinés */
 .btn {
-    border-radius: var(--border-radius);
-    padding: 10px 20px;
-    font-weight: 500;
-    transition: var(--transition);
-    border: 1px solid transparent;
-    font-size: 14px;
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     text-align: center;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    gap: 8px;
 }
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--white);
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-    background-color: #0041a3; /* Un peu plus sombre au survol */
-    border-color: #0041a3;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-success {
-    background-color: var(--success-color);
-    color: white;
-    border-color: var(--success-color);
-}
-
-.btn-success:hover {
-    background-color: #059669;
+    background-color: var(--primary-color-dark);
+    border-color: var(--primary-color-dark);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
     background-color: var(--white);
-    color: var(--text-primary);
+    color: var(--gray-900);
     border-color: var(--gray-300);
 }
 
 .btn-secondary:hover {
     background-color: var(--gray-50);
-    border-color: var(--gray-400);
+    border-color: var(--gray-500);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: var(--white);
+    border-color: var(--success-color);
+}
+
+.btn-success:hover {
+    background-color: #006644; /* Darker green */
+    border-color: #006644;
+}
+
+.btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 .btn-info {
