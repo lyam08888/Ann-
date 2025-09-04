@@ -1102,45 +1102,39 @@ window.addEventListener('DOMContentLoaded', function() {
 	padding:50%;
 }
 
-/* ===== DESIGN MINIMALISTE ÉPURÉ ===== */
+/* ===== DESIGN ÉPURÉ & PROFESSIONNEL V2 ===== */
 
-/* Variables CSS minimalistes */
+/* Variables CSS pour un design system raffiné */
 :root {
-    /* Couleurs épurées */
-    --primary-color: #2563eb;
-    --secondary-color: #64748b;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --neutral-color: #6b7280;
+    /* Palette de couleurs */
+    --primary-color: #0052cc; /* Un bleu plus profond et professionnel */
+    --primary-color-light: #deebff;
+    --success-color: #00875a;
+    --danger-color: #de350b;
+    --warning-color: #ffab00;
     
-    /* Tons de gris minimalistes */
+    /* Tons de gris neutres */
     --white: #ffffff;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
+    --gray-50: #f8f9fa;   /* Fond légèrement texturé */
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;  /* Bordures subtiles */
+    --gray-300: #dee2e6;
+    --gray-500: #adb5bd;
+    --gray-700: #495057;  /* Texte secondaire */
+    --gray-900: #212529;  /* Texte principal */
     
     /* Textes */
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-700);
     
-    /* Espacements et formes */
-    --border-radius: 8px;
-    --border-radius-sm: 6px;
-    --border-radius-lg: 12px;
-    --transition: all 0.2s ease;
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    /* Design System */
+    --border-radius: 6px;
+    --border-radius-lg: 10px;
+    --transition: all 0.2s ease-in-out;
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.1), 0 8px 16px -8px rgba(0, 0, 0, 0.06);
 }
 
 /* Reset et base minimalistes */
@@ -1151,11 +1145,13 @@ window.addEventListener('DOMContentLoaded', function() {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--gray-50);
     color: var(--text-primary);
-    line-height: 1.6;
-    font-size: 16px;
+    line-height: 1.5;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Container minimaliste */
@@ -1169,17 +1165,15 @@ body {
     animation: pageEntrance 0.8s ease-out;
 }
 
-/* Header moderne avec glassmorphism */
+/* Header ultra-pro */
 .modern-header {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    padding: 15px 0;
+    z-index: 1020;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    padding: 12px 0;
     margin-bottom: 2rem;
 }
 
@@ -1236,24 +1230,27 @@ body {
     font-size: 1.1rem;
 }
 
-/* Cards minimalistes */
+/* Cards professionnelles */
 .card {
     background: var(--white);
     border: 1px solid var(--gray-200);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
+    overflow: hidden; /* Pour les headers colorés */
 }
 
 .card:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
     border-color: var(--gray-300);
 }
 
 .card-header {
-    background: var(--gray-50);
+    background: var(--white);
     border-bottom: 1px solid var(--gray-200);
-    padding: 20px;
+    padding: 16px 24px;
+    font-weight: 600;
 }
 
 .card-header.bg-gradient-primary {
@@ -1292,24 +1289,27 @@ body {
     font-size: 14px;
 }
 
-/* Formulaires minimalistes */
+/* Formulaires ultra-propres */
 .form-control, .form-select {
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius);
-    padding: 12px 16px;
-    font-size: 14px;
+    padding: 10px 14px;
+    font-size: 15px;
     transition: var(--transition);
-    background: var(--white);
+    background-color: var(--white);
+    color: var(--text-primary);
+    width: 100%;
 }
 
 .form-control:focus, .form-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-color-light);
     outline: none;
 }
 
-.form-control:hover, .form-select:hover {
-    border-color: var(--gray-400);
+.form-control::placeholder {
+    color: var(--gray-500);
+    opacity: 1;
 }
 
 /* Input Groups modernes */
@@ -1335,10 +1335,10 @@ body {
     border-bottom-right-radius: var(--border-radius-sm);
 }
 
-/* Boutons minimalistes */
+/* Boutons professionnels */
 .btn {
     border-radius: var(--border-radius);
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-weight: 500;
     transition: var(--transition);
     border: 1px solid transparent;
@@ -1346,17 +1346,21 @@ body {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    text-align: center;
 }
 
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+    box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: #0041a3; /* Un peu plus sombre au survol */
+    border-color: #0041a3;
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
@@ -1832,7 +1836,7 @@ function valider(){
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-3"><i class="menu-icon bx bx-rocket"></i>Publier une offre d'emploi</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Formulaire /</span> Publication</h4>
               <!-- Templates de rédaction -->
               <div class="card mb-4">
                 <div class="card-header bg-gradient-primary text-white">
